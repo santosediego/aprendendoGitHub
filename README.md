@@ -1,422 +1,193 @@
-# Comandos mais utilizados no Git
+# Guia Prático de Comandos Git
 
 ## Sumário
-- [`Comandos básicos`](https://www.google.com.br);
-- [`Ingnorar arquivos`](https://www.google.com.br);
-- [`Servidores`](https://www.google.com.br);
-- [`Adicionando arquivo`](https://www.google.com.br);
-- [`Verificando alterações`](https://www.google.com.br);
-- [`Commit`](https://www.google.com.br);
-- [`Branches`](https://www.google.com.br);
-- [`Apagar, mover ou renomear`](https://www.google.com.br);
-- [`Revertendo alterações`](https://www.google.com.br);
-- [`Histórico (log)`](https://www.google.com.br);
-- [`Tags`](https://www.google.com.br);
-- [`Stash`](https://www.google.com.br);
-- [`Referência`](https://www.google.com.br);
+- [Comandos Básicos](#comandos-básicos)
+- [Ignorar Arquivos](#ignorar-arquivos)
+- [Editor Padrão e Ferramenta de Merge](#editor-padrão-e-ferramenta-de-merge)
+- [Servidores Remotos](#servidores-remotos)
+- [Adicionando Arquivos](#adicionando-arquivos)
+- [Verificando Alterações](#verificando-alterações)
+- [Commit](#commit)
+- [Branches](#branches)
+- [Apagar, Mover ou Renomear](#apagar-mover-ou-renomear)
+- [Revertendo Alterações](#revertendo-alterações)
+- [Histórico (log)](#histórico-log)
+- [Tags](#tags)
+- [Stash](#stash)
+- [Referências](#referências)
 
-## Comandos básicos
+## Comandos Básicos
 
-Configurações locais
-
+Configurações locais:
 ```bash
-
 git config --list
 ```
 
-Visualizar o nome de usuário
-
+Visualizar e alterar usuário/email:
 ```bash
 git config --global user.name
-```
+# ou para alterar
+git config --global user.name "Seu Nome"
 
-Alterar o nome de usuário
-
-```bash
-git config --global user.name <nome do usuário>
-```
-
-Visualizar o e-mail
-
-```bash
 git config --global user.email
+# ou para alterar
+git config --global user.email "seu@email.com"
 ```
 
-Alterar o e-mail
-
-```bash
-git config --global user.email <email do usuário>
-```
-
-Iniciar um repositório
-
+Iniciar/clonar/atualizar repositório:
 ```bash
 git init
-```
-
-Clonar repositório
-
-```bash
-
-git clone <link>
-```
- Atualizar repositório
-
-```bash
-
+git clone <url>
 git pull
 ```
 
-## Ignorar arquivos
+## Ignorar Arquivos
 
-Criar um arquivo chamado `.gitignore` e adicionamos os nomes dos arquivos nele.
+Criar um arquivo `.gitignore` com os nomes ou padrões de arquivos a serem ignorados.
 
-## Alterando o editor de textos usados para commit e diffs
+## Editor Padrão e Ferramenta de Merge
 
 ```bash
 git config --global core.editor vim
-```
-
-```bash
 git config --global merge.tool vimdiff
 ```
 
-## Servidores
-
-Listando caminhos de servidores
+## Servidores Remotos
 
 ```bash
-git remote -v
+git remote -v                            # listar
+
+git remote add origin <url>             # adicionar
+
+git remote set-url origin <nova_url>    # atualizar
 ```
 
-Adicionando o caminho do servidor
+## Adicionando Arquivos
 
 ```bash
-git remote add origin <url>
+git add <arquivo>        # arquivo específico
+git add .                # todos os arquivos modificados
+git commit -am "msg"     # add + commit de arquivos modificados
 ```
 
-Atualizando o caminho do servidor
-
-```bash
-git remote set-url origin <url>
-```
-
-## Adicionando arquivos
-
-Arquivo especifico
-
-```bash
-git add <nome do arquivo>
-```
-Todos os arquivos criados e ou alterados
-
-```bash
-git add .
-```
-Adiciona e commita diretamente
-
-```bash
-git commit -am <Mensagem do commit>
-```
-
-## Verificando alterações
-
-Verifica as alterações de forma geral
+## Verificando Alterações
 
 ```bash
 git status
-```
-
-Verifica todas as alterações do arquivo
-
-```bash
-git diff <nome do arquivo>
-```
-Verifica todas as alterações dos arquivos
-
-```bash
-git diff
+git diff                 # compara área de trabalho x stage
+git diff <arquivo>
 ```
 
 ## Commit
 
-Realiza o commit
-
 ```bash
-git commit -m <mensagem>
+git commit -m "Mensagem do commit"
 ```
+
 ## Branches
 
-Lista as branches
-
 ```bash
-git branch
-```
+git branch                       # listar
 
-Cria uma nova branch
+git branch <nome>               # criar nova
 
-```bash
-git branch <nome da branch>
-```
-Cria uma nova branch
+git checkout -b <nome>          # criar e mudar para a nova
 
-```bash
-git branch <nome da branch>
-```
-Cria uma nova branch já a setando para utilização
+git branch -d <nome>            # deletar
 
-```bash
-git checkout -b <nome da branch>
-```
-Deleta uma branch
+git checkout <nome>             # trocar de branch
 
-```bash
-git branch -d <nome da branch>
-```
-Troca de brach
+git push origin <nome>          # enviar para o servidor
 
-```bash
-git checkout <nome da branch>
-```
-Envia a branch para o servidor
+git push --all origin           # enviar todas as branches
 
-```bash
-git push origin <nome da branch>
-```
-Envia todas as branchs para o servidor
+git push origin :<nome>         # deletar branch remota
 
-```bash
-git push --all origin
-```
-Deleta uma branch remota
-
-```bash
-git push origin :<nome da branch>
-```
-
-Junta branches
-
-```bash
 git checkout main
+git merge <branch>              # juntar branch na main
+
+git push origin main            # enviar alterações da main
 ```
+
+## Apagar, Mover ou Renomear
 
 ```bash
-git merge <nome da branch>
+git mv <origem> <destino>       # mover/renomear
+
+git rm <arquivo>                # remover arquivo
+
+git rm -r <pasta>               # remover pasta com arquivos
 ```
 
-Enviando alterações para o servidor
+## Revertendo Alterações
 
 ```bash
-git checkout main
+git reset <arquivo>             # tira do stage
+
+git reset HEAD .                # limpa todo o stage
+
+git checkout <arquivo>          # volta arquivo para último commit
+
+git checkout .                  # volta tudo
+
+git reset --soft HEAD~1         # volta commit, mantém stage
+
+git reset --hard HEAD~1         # volta commit e limpa stage
+
+git revert <hash>               # desfaz commit sem perder histórico
+
+git reset --hard HEAD~1 && git push -f origin main  # desfaz push
 ```
+
+## Histórico (log)
 
 ```bash
-git push origin main
+git log                         # histórico completo
+
+git log -p -2                   # mostra 2 últimos com diff
+
+git log --pretty=oneline        # uma linha por commit
+
+git log --pretty=format:"%h = %an, %ar - %s"   # personalizado
+
+git log --author="autor"        # filtrando por autor
 ```
 
-## Apagando, movendo ou renomeando arquivos ou pastas sem "estragar" histórico Git
-
-Mover arquivos ou pastas
+## Tags
 
 ```bash
-git mv <options> <args>
+git tag <nome>                  # criar
+
+git tag                         # listar
+
+git tag -a <nome> -m "msg"      # com mensagem
+
+git tag -a <nome> <hash>        # referenciando commit
+
+git push origin <nome>          # enviar uma
+
+git push origin --tags          # enviar todas
 ```
-
-Deletando pasta ou arquivo, no caso de pasta, a mesma deve estar vazia
-
-```bash
-git rm <nome do arquivo ou pasta>
-```
-
-Deletando pasta que não esta vazia
-
-```bash
-git rm -r <nome da pasta>
-```
-
-Renomeando pasta ou arquivo
-
-```bash
-git mv <nome da pasta ou arquivo>
-```
-
-## Revertendo alterações
-
-Desfazendo inclusões ou alterações no stage
-
-```bash
-git reset <nome do arquivo>
-```
-
-Desfazendo todas inclusões ou alterações no stage
-
-```bash
-git reset HEAD .
-```
-
-Desfazendo todas inclusões ou alterações no stage
-
-```bash
-git reset HEAD .
-```
-
-Desfazendo um arquivo para o ultimo commit
-
-```bash
-git checkout <nome do arquivo>
-```
-
-Desfazendo tudo para o ultimo commit
-
-```bash
-git checkout .
-```
-
-Desfazendo uma alteração mas colocando em stage
-
-```bash
-git reset --soft HEAD~1
-```
-
-Desfazendo alteração sem colocar em stage
-
-```bash
-git reset --hard HEAD~1
-```
-
-Desfazendo para um commit especifico
-
-```bash
-git revert <hash>
-```
-
-Desfazendo para o último push
-
-```bash
-git reset --hard HEAD~1 && git push -f origin main
-```
-
-## Analisando o histórico (log)
-
-Lista todo o log
-
-```bash
-git log
-```
-
-Lista de acordo com a quantidade informada
-
-```bash
-git log -p -<2>
-```
-
-Apresenta o log resumido
-
-```bash
-git log --pretty=oneline
-```
-
-Formantando o log
-- Onde
-  - %h: abreviação do hash;
-  - %an: nome do autor;
-  - %ar: data;
-  - %s: comentário
-
-```bash
-git log --pretty=format:"%h = %an, %ar - %s"
-```
-
-Exibindo o log por autor
-
-```bash
-git log --author=<nome do autor ou usuário>
-```
-
-## Utilizando tags
-
-Criando uma tag
-
-```bash
-git tag <nomeDaTag>
-```
-
-Listando tags
-
-```bash
-git tag
-```
-Criar tag com mensagem
-
-```bash
-git tag -a <nome> -m "<mensagem>"
-```
-
-Criar tag referencia commit
-
-```bash
-git tag -a <nome> <hash>
-```
-
-Enviando tag para o servidor
-
-```bash
-git push origin <nome>
-```
-
-Enviando todas as tags para o servidor
-
-```bash
-git push origin --tags
-```
-
 
 ## Stash
 
-Stash, resumindo, é uma área temporária onde se guarda um histórico sem adicionar na brach.
-
-Salvar tudo no stash
-
 ```bash
-git stash
-```
+git stash                       # salva estado
 
-Salvando stash com descrição
+git stash save -u "mensagem"    # com untracked e mensagem
 
-```bash
-git stash  save -u "<mensagem>"
-```
+git stash list                  # listar
 
-Listando o que existe em stash
+git stash pop                   # aplicar e remover
 
-```bash
-git stash list
-```
+git stash apply                 # aplicar e manter
 
-
-Revertendo para o stash e removendo da lista. Removendo a última entrada na lista.
-
-```bash
-git stash pop
-```
-
-Revertendo para o stash em remover do stash
-
-```bash
-git stash apply
-```
-
-Revertendo para o stash em remover do stash para um item especifico
-
-```bash
-git stash apply stash@{<numero>}
+git stash apply stash@{n}       # aplicar stash específico
 ```
 
 ## Referências
-[Comandos mais utilizados no Git](https://woliveiras.com.br/posts/comandos-mais-utilizados-no-git/), Autor: William Oliveira, Data de publiação: 26/Dez/2018
 
-Abaixo segue alguns links com exemplos para a edição do README.md.
+- [Comandos mais utilizados no Git (William Oliveira)](https://woliveiras.com.br/posts/comandos-mais-utilizados-no-git/)
+- [Guia de README bonitão - Raul Esteves](https://medium.com/@raullesteves/github-como-fazer-um-readme-md-bonit%C3%A3o-c85c8f154f8/)
+- [Template em Português - dbader](https://github.com/dbader/readme-template/tree/master/portuguese)
 
-[Exemplo escrito por Raul Esteves](https://medium.com/@raullesteves/github-como-fazer-um-readme-md-bonit%C3%A3o-c85c8f154f8/)
-
-[Template em Português](https://github.com/dbader/readme-template/tree/master/portuguese)
